@@ -20,6 +20,20 @@ class ShortenUrlController {
         }
     }
 
+    async delete(req,res){
+        const {params} = req;
+        try {
+            const response = await this.shortenUrlService.delete(params.id);
+            res
+                .status(STATUS_CODE.SUCCESS)
+                .json(response);
+        } catch (error) {
+            res
+                .status(STATUS_CODE.BAD_REQUEST)
+                .json(error);
+        }
+    }
+
     async getAll(req, res) {
         try {
             const response = await this.shortenUrlService.findAll();

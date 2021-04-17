@@ -22,10 +22,6 @@ class ShortenUrlService {
         return await shortenUrlRecord.save();
     }
 
-    async update(_id, data) {
-        return await this.shortenModel.update({_id}, data);
-    }
-
     async delete(_id) {
         return await this.shortenModel.remove({_id});
     }
