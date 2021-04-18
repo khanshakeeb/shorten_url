@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A demo app for shortening long urls",
   "scripts": {
-    "start": "babel-node server.js",
+    "start": "babel-node src/server.js",
     "watch": "cross-env NODE_ENV=development babel-watch src/server.js",
     "test": "cross-env NODE_ENV=testing mocha --require @babel/register --timeout 12000 --recursive tests/*.js --exit"
   },
