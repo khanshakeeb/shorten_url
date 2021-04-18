@@ -47,5 +47,3 @@ It will run a static server which serves React App.
 2. Server default PORT= 3001; make sure port is available in your system
 3. Client default PORT = 3000; make sure port is available in your system.
 
-
-
