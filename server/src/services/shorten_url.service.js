@@ -1,6 +1,7 @@
 import {customAlphabet} from 'nanoid';
 import ShortenUrlModel from '../models/shorten_url.model';
-import {APP_CONST} from "../utils";
+import {APP_CONST} from '../utils';
+import configurations from '../../config';
 
 class ShortenUrlService {
     constructor(shortenModel) {
@@ -13,11 +14,14 @@ class ShortenUrlService {
 
     async create(data) {
         const {longUrl = null} = data;
-        const {SHORT_CODE_LENGTH, CUSTOM_ALPHABET_SET } = APP_CONST;
-        const nanoid = customAlphabet(CUSTOM_ALPHABET_SET,SHORT_CODE_LENGTH);
+        const {SHORT_CODE_LENGTH, CUSTOM_ALPHABET_SET} = APP_CONST;
+        const nanoid = customAlphabet(CUSTOM_ALPHABET_SET, SHORT_CODE_LENGTH);
+        const {baseUrl} = configurations.get('shortURL');
+        const shortCode = nanoid();
         const shortenUrlRecord = new this.shortenModel({
-            shortCode: nanoid(),
-            longUrl
+            shortCode,
+            longUrl,
+            shortURL: `${baseUrl}/short-url/${shortCode}`
         });
         return await shortenUrlRecord.save();
     }
@@ -26,8 +30,12 @@ class ShortenUrlService {
         return await this.shortenModel.remove({_id});
     }
 
-    async findAll(){
+    async findAll() {
         return await this.shortenModel.find().exec();
+    }
+
+    async findByCode(code) {
+        return await this.shortenModel.findOne({shortCode: code}).exec();
     }
 }
 

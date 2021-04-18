@@ -20,7 +20,7 @@ class ShortenUrlController {
         }
     }
 
-    async delete(req,res){
+    async delete(req, res) {
         const {params} = req;
         try {
             const response = await this.shortenUrlService.delete(params.id);
@@ -51,11 +51,26 @@ class ShortenUrlController {
         try {
             const {body} = req;
             const response = await this.shortenUrlService.create(body);
-            console.log(response);
             res
                 .status(STATUS_CODE.SUCCESS)
                 .json(response);
 
+        } catch (error) {
+            res
+                .status(STATUS_CODE.BAD_REQUEST)
+                .json(error);
+        }
+    }
+
+    async shortUrlCode(req, res) {
+        try {
+            const {params} = req;
+            const isExists = await this.shortenUrlService.findByCode(params.code);
+            if (!isExists) res
+                .status(STATUS_CODE.SUCCESS)
+                .json({message: 'Sorry we cannot find this code'});
+
+            res.redirect(isExists.longUrl);
         } catch (error) {
             res
                 .status(STATUS_CODE.BAD_REQUEST)

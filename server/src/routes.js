@@ -12,4 +12,7 @@ export default (app)=>{
     app.post('/api/v1/short-urls', (req, res)=> ShortenUrlController.create(req,res));
     app.delete( '/api/v1/short-urls/:id', (req, res)=> ShortenUrlController.delete(req,res));
 
+    app.get('/short-url/:code', (req, res)=> ShortenUrlController.shortUrlCode(req,res));
+
+
 };

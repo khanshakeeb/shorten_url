@@ -2,6 +2,9 @@ export default {
     development: {
         database: {
             url: 'mongodb://localhost:27020/shorten_url'
+        },
+        shortURL:{
+            baseUrl:'http://localhost:3001'
         }
     },
     production: {
