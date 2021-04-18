@@ -1,6 +1,12 @@
 import React, {useState, useEffect} from "react";
 import axios from 'axios';
-import {Container, Row, Col, Button, Form} from 'react-bootstrap';
+import {
+    Container,
+    Row,
+    Col,
+    Button,
+    Form, Table
+} from 'react-bootstrap';
 import './App.css';
 
 function App() {
@@ -36,15 +42,32 @@ function App() {
                 <p>No record found </p>
             </React.Fragment>
         );
-        return listShortUrls.map(item => {
-            return (
-                <React.Fragment key={item._id}>
-                    <div>{item._id}</div>
-                    <div>{item.shortCode}</div>
-                    <div>{item.longUrl}</div>
-                </React.Fragment>
-            )
-        });
+        return(
+            <Table striped bordered hover size="sm">
+                <thead>
+                <tr>
+                    <th>_id</th>
+                    <th>Short code</th>
+                    <th>Short cod url</th>
+                    <th>Original url</th>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    listShortUrls.map(item => {
+                        return (
+                            <tr key={item._id}>
+                                <td>{item._id}</td>
+                                <td>{item.shortCode}</td>
+                                <td>{item.shortURL}</td>
+                                <td>{item.longUrl}</td>
+                            </tr>
+                        )
+                    })
+                }
+                </tbody>
+            </Table>
+        );
     };
 
     return (
@@ -55,17 +78,17 @@ function App() {
                 </Col>
             </Row>
             <Row>
-                <Col md={{span: 6, offset: 4}} offset>
-                    <Form inline onSubmit={handleSubmit}>
-                        <Form.Label>URL:</Form.Label>
+                <Col md={{span: 8}} offset>
+                    <Form className="App-form" onSubmit={handleSubmit}>
                         <Form.Control
                             type="text"
-                            placeholder="Large text"
+                            size="lg"
+                            placeholder="Shorten your link"
                             name="longUrl"
                             value={longUrlValue}
                             onChange={handleLongUrlFieldValue}
                         />
-                        <Button type="submit" className="mb-2">Submit</Button>
+                        <Button size="lg" type="submit" className="mb-2 App-button">Submit</Button>
                     </Form>
                 </Col>
             </Row>
